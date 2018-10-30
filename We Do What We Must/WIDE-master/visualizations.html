@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <style>
+            body {
+                width: 500px;
+                height: 500px;
+            }
+        </style>
+    </head>
+    <body>
+        <input id="search">
+        <button id="searchButton">Search</button>
+        <br>
+        <ul id="list">
+
+        </ul>
+
+        <div id="d3_selectable_force_directed_graph"
+            style="width: 960px; height: 500px; margin: auto; margin-bottom: 12px">
+            <svg/>
+        </div>
+
+        <link rel='stylesheet' href='css/d3v4-selectable-zoomable-force-directed-graph.css'>
+        <script src="https://d3js.org/d3.v4.js"></script>
+        <script src="js/d3v4-brush-lite.js"></script>
+        <script src="js/d3v4-selectable-force-directed-graph.js"></script>
+        <script src="js/relationships.js"></script>
+
+        <script>
+            var button = document.getElementById("searchButton");
+            var field = document.getElementById("search");
+            var list = document.getElementById("list")
+            button.addEventListener("click", function(evt) {
+                var date = new Date();
+                button.style = "display: none;";
+                var data = getItDone(field.value);
+                data.nodes.map(function(a) {
+                    let li = document.createElement("li");
+                    li.innerText = a.id;
+                    list.appendChild(li);
+                });
+                
+                var svg = d3.select('#d3_selectable_force_directed_graph'); 
+                createV4SelectableForceDirectedGraph(svg, data);
+                var date2 = new Date();
+
+                var diff = date2.getTime() - date.getTime();
+                console.log(diff / 1000);
+            })
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>JS Bin</title>
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+    </head>
+
+
+    <body>
+        <iframe src="visualizations.html"></iframe>
+
+        <p>start date:</p>
+        <input type="number" id="start_date" min="1900" max="2030" step="1" value="1990">
+
+        <p>end date:</p>
+        <input type="number" id="end_date" min="1900" max="2030" step="1" value="2000">
+
+        <button onclick="dateFunction()">Confirm year duration</button>
+        <div id="dateResult"></div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <input type="text" id="text1"></input>
+        <input type="button" id="button1" value="Add" onclick="add_element_to_array();"></input>
+        <div id="Result"></div>
+
+        <br>
+        <br>
+        <br>
+        <button onclick="drawLineChart()" id="myButton">Show the diagram</button>
+
+        <svg id="line_chart"></svg>
+        <br/>
+        <br/>
+        <svg id="line_chart2"></svg>
+
+        <script type="text/javascript" src="http://d3js.org/d3.v3.js"></script>
+        <script type="text/javascript" src="js/finnascript.js"></script>
+        <script type="text/javascript" src="js/plotting.js"></script>
+        <script type="text/javascript" src="js/correlationMetric.js"></script>
+        <script type="text/javascript" src="js/buttonCallbacks.js"></script>
+        <script type="text/javascript" src="js/wide.js"></script>
+        <script type="text/javascript"src="js/date.js"></script>
+    </body>
+</html>
