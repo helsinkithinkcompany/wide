@@ -81,6 +81,8 @@ Description:
 ### Wiki Loves Crowdsourcing
 
 Team members: *Katri Niinikangas, Kimmo Virtanen, Susanna Ånas*  
-Project link: https://github.com/Ajapaik/wide-hackathon.git
+Project link: https://github.com/Ajapaik/wide-hackathon
+
+Description:
 
 >  We are testing a workflow idea at the hackathon where enriched metadata and rephotographs from crowdsourcing platform Ajapaik are first curated and then published over OAI-PMH. Published rephotos and a then-and-now pair are then layered on top of Finna with enriched metadata.
