@@ -1,0 +1,110 @@
+
+.headerH1{
+  font-size:60px;
+  text-align:center;
+  font-family:Georgia;
+  color:rgba(209, 209, 209, 1)
+
+}
+p {
+  font-family:Georgia;
+
+}
+.headerH2{
+  font-size:30px;
+  text-align:center;
+  font-family:Georgia;
+
+}
+header {
+
+  background-color: rgba(114, 57, 129, 1);
+  padding: 30px;
+  text-align: center;
+  font-size: 60px;
+
+  
+
+}
+.topnav {
+
+  overflow: hidden;
+
+  background-color: rgba(89, 89, 89, 1);
+
+}
+
+
+
+.topnav a {
+
+  float: left;
+
+  color: #f2f2f2;
+
+  text-align: center;
+
+  padding: 14px 16px;
+
+  text-decoration: none;
+
+  font-size: 17px;
+
+}
+
+
+
+
+.topnav a:hover {
+
+  background-color: #ddd;
+
+  color: black;
+
+}
+
+
+
+.topnav a.active {
+
+  background-color: rgba(114, 57, 129, 1);
+
+  color: rgba(209, 209, 209, 1);
+
+}
+button{
+  background-color:rgba(114, 57, 129, 1); 
+   color:rgba(209, 209, 209, 1); 
+   margin-left:auto;
+   margin-right:auto;
+   display:block;
+   margin-top:22%;
+   margin-bottom:0%
+}
+
+
+
+div#object {
+  display: flex;
+  flex-flow: column nowrap;
+
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/*#picButton {
+  background-image:url('./FINAL.png')
+}*/
+
+div#awesome {
+  display: flex;
+  flex-flow: row nowrap;
+
+  justify-content: center;
+  align-items: flex-start;
+}
+
+div#awesome > div:first-child {
+  padding: 1rem;
+  align-self: center;
+}

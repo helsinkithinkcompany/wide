@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>WIDE Dynamic</title>
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+  
+      <style>
+      /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+      @charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Quantico);
+html, body {
+  background: #111;
+}
+
+#container {
+  background: #111;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+#stats {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+/* Info */
+@keyframes show-info {
+  0% {
+    transform: rotateY(120deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+.info {
+  transition: all 180ms ease-out;
+  transform-style: preserve-3d;
+  transform: perspective(800px);
+  font-family: "Quantico", sans-serif;
+  position: absolute;
+  font-size: 12px;
+  opacity: 0.8;
+  color: #fff;
+  width: 220px;
+  left: 0px;
+  top: 20px;
+}
+.info:hover {
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
+  opacity: 1;
+}
+.info h1, .info h2, .info h3 {
+  line-height: 1;
+  margin: 5px 0;
+}
+.info a {
+  transition: all 200ms ease-out;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  opacity: 0.6;
+  color: #fff;
+}
+.info a:hover {
+  opacity: 0.99;
+}
+.info .about,
+.info .more {
+  transform-origin: 0% 50%;
+  transform: rotateY(120deg);
+  margin-bottom: 1px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 12px 15px 12px 20px;
+}
+.info .about {
+  animation: show-info 500ms cubic-bezier(0.23, 1, 0.32, 1) 600ms 1 normal forwards;
+  padding-bottom: 15px;
+}
+.info .about a {
+  opacity: 0.9;
+}
+.info .about h1 {
+  letter-spacing: -1px;
+  font-weight: 300;
+  font-size: 19px;
+  opacity: 0.95;
+}
+.info .about h2 {
+  font-weight: 300;
+  font-size: 13px;
+  opacity: 0.8;
+}
+.info .about h3 {
+  text-transform: uppercase;
+  margin-top: 10px;
+  font-size: 11px;
+}
+.info .about h3:before {
+  margin-right: 2px;
+  font-size: 14px;
+  content: "›";
+}
+.info .more {
+  animation: show-info 500ms cubic-bezier(0.23, 1, 0.32, 1) 500ms 1 normal forwards;
+  padding: 5px 15px 10px 20px;
+}
+.info .more a {
+  text-transform: uppercase;
+  margin-right: 10px;
+  font-size: 10px;
+}
+#year-label {
+  color: white;
+}
+
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+</head>
+
+<body>
+  <label id="year-label" for="year-slider" style="font-size: 1em">Slide to choose year.</label>
+  <input type="range" id="year-slider" name="year-slider" min="1800" max="2018" value="1850" onchange="updateGraph()" style="width:90%"/>
+
+  <script>
+        // fetch data for current year
+        window.addEventListener("load", function (e) {
+            console.log("document loaded!");
+            updateGraph();
+        });
+
+        function updateGraph() {
+            // get current slider year and update display
+            let year = document.getElementById("year-slider").value
+            let yeardisplay = document.getElementById("year-label");
+            yeardisplay.innerHTML = "Slide to choose year. Current: <strong>" + year + "</strong>";
+
+            let canvas = document.getElementById("container").children[0];
+            let width = canvas.attributes["width"].value;
+            let height = canvas.attributes["height"].value;
+
+            console.log("fetching data: ", year, " width: ", width, " height: ", height);
+
+            // actually request the data for the year from backend
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://localhost:8080/graph_by_year?year="+year+"&width="+width+"&height="+height, true); // true = async / false = sync
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    console.log("Got reply, status ", xhr.status);
+                    if (xhr.status === 200) { // on successful HTTP 200 OK response
+                        let xhr_result = JSON.parse(xhr.responseText);
+                        console.log(xhr_result);
+                        init_particles(xhr_result["graph"]["particles"], xhr_result["graph"]["nodes"], xhr_result["graph"]["edges"]);
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        /*
+        const width = 1000;
+
+        function tree(data) {
+            const root = d3.hierarchy(data);
+            root.dx = 15;
+            root.dy = width / (root.height + 1);
+            return d3.tree().nodeSize([root.dx, root.dy])(root);
+        }
+
+        function mouseovered(active) {
+            return function(d) {
+                d3.select(this).classed("label--active", active);
+                d3.select(d.linkExtensionNode).classed("link-extension--active", active).raise();
+                do d3.select(d.linkNode).classed("link--active", active).raise();
+                while (d = d.parent);
+            };
+        }
+
+        function drawChart(data) {
+            const root = tree(data);
+            const margin = ({top: 10, right: 120, bottom: 10, left: 40})
+
+            let x0 = Infinity;
+            let x1 = -x0;
+            root.each(d => {
+                if (d.x > x1) x1 = d.x;
+                if (d.x < x0) x0 = d.x;
+            });
+            const height = x1 - x0 + root.dx * 2
+
+            const svg = d3.select("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("viewBox", [0, 0, width, height])
+                .style("font", "10px sans-serif")
+                .style("user-select", "none")
+                .style("width", "100%")
+                .style("height", "auto");
+
+            const g = svg.append("g")
+                .attr("font-family", "sans-serif")
+                .attr("font-size", 6)
+                .attr("transform", `translate(${root.dy / 3},${root.dx - x0})`);
+
+            const link = g.append("g")
+                .attr("fill", "none")
+                .attr("stroke", "#555")
+            .selectAll("path")
+                .data(root.links())
+                .enter().append("path")
+                    .attr("d", d3.linkHorizontal()
+                        .x(d => d.y)
+                        .y(d => d.x))
+                    .attr("stroke-width", d => Math.max(1, Math.log(d.source.data.count)*2))
+                    .attr("opacity", 0.6);
+
+            const node = g.append("g")
+                .attr("stroke-linejoin", "round")
+                .attr("stroke-width", 3)
+            .selectAll("g")
+                .data(root.descendants().reverse())
+                .enter().append("g")
+                    .attr("transform", d => `translate(${d.y},${d.x})`);
+
+            node.append("circle")
+                .attr("fill", d => d.children ? "#555" : "#999")
+                .attr("r", function (d) {
+                    if (d.depth < 4) return 2.5
+                    else return d.data.count;
+                });
+
+            node.append("text")
+                .attr("dy", "0.31em")
+                .attr("x", d => d.children ? -6 : 6)
+                .attr("text-anchor", d => d.children ? "end" : "start")
+                .attr("font-size", function (d) {
+                    if (d.depth < 4) return 6
+                    else if (d.data.count < 6) return 5
+                    else return d.data.count;
+                })
+                .text(d => d.data.prefLabel)
+            .clone(true).lower()
+                .attr("stroke", "white");
+
+            return svg.node();
+        }*/
+    </script>-->
+
+  <div id='container'></div>
+<div class='info'>
+  <!--<hgroup class='about'>
+    <h1>30,000 Particles</h1>
+    <h2>A study creating performant particles with Canvas 2D</h2>
+    <h3>Use your mouse</h3>
+  </hgroup>-->
+</div>
+  <script src='https://gist.github.com/mrdoob/838785/raw/a19a753b441d6ad41707c58f06dbe17f3470423c/RequestAnimationFrame.js'></script>
+<script src='https://raw.github.com/mrdoob/stats.js/master/build/stats.min.js'></script>
+
+  
+
+    <script  src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+Useful (?) links:
+http://finto.fi/yso/fi/
+http://finto.fi/yso-paikat/fi/
+YSO datamodel: https://www.kiwi.fi/display/Asiasanastotjaontologiat/YSOn+tietomalli
