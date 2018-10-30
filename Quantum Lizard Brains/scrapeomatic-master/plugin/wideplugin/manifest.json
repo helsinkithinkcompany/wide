@@ -1,0 +1,40 @@
+{
+
+  "description": "WIDE plugin",
+  "manifest_version": 2,
+  "name": "WIDE plugin",
+  "version": "1.0",
+  "homepage_url": "https://github.com/something",
+  "icons": {
+    "48": "icons/beasts-48.png"
+  },
+
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "*://localhost/*"
+  ],
+
+  "background": {
+    "scripts": ["dist/app.js"]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script/content_script.js"]
+    }
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/beasts-32.png",
+    "theme_icons": [{
+        "light": "icons/beasts-32-light.png",
+        "dark": "icons/beasts-32.png",
+        "size": 32
+    }],
+    "default_title": "WIDE",
+    "default_popup": "popup/popup.html"
+  }
+
+}

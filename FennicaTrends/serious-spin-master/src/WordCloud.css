@@ -1,0 +1,9 @@
+.WordCloud {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.WordCloud text:hover {
+  cursor: pointer;
+}

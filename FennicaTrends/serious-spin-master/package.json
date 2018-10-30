@@ -1,0 +1,32 @@
+{
+  "name": "serious-spin",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "chart.js": "^1.1.1",
+    "firebase": "^5.5.5",
+    "lodash": "^4.17.11",
+    "rc-slider": "^8.6.3",
+    "react": "^16.5.2",
+    "react-d3-cloud": "^0.6.0",
+    "react-dom": "^16.5.2",
+    "react-scripts": "2.0.5",
+    "react-select": "^2.1.1",
+    "react-svg-line-chart": "^2.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "build-fb": "react-scripts build && firebase deploy",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

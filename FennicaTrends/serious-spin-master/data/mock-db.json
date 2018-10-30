@@ -1,0 +1,40 @@
+{
+  "fennica-grouped": {
+    "tietojenkäsittelytiede": {
+      "2017": {
+        "ekasana": 10,
+        "tokasana": 20,
+        "kolmassana": 30
+      },
+      "2018": {
+        "ekasana": 5,
+        "tokasana": 10,
+        "kolmassana": 15
+      }
+    },
+    "valtiotieteellinen tiedekunta": {
+      "2017": {
+        "ekasana": 100,
+        "tokasana": 200,
+        "kolmassana": 300
+      },
+      "2018": {
+        "ekasana": 50,
+        "tokasana": 100,
+        "kolmassana": 150
+      }
+    }
+  },
+  "fennica-all": {
+    "2017": {
+      "ekasana": 100,
+      "tokasana": 200,
+      "kolmassana": 300
+    },
+    "2018": {
+      "ekasana": 50,
+      "tokasana": 100,
+      "kolmassana": 150
+    }
+  }
+}

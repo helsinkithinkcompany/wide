@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href='{% static "app.css" %}'>
+    </head>
+
+    <body>
+        <div id="app" class="w3-container">
+            <img style='margin-right: auto; margin-left: auto; display: block; width:150px; height:150px' id='logo' src='{% static "logo.png" %}'>
+            {% verbatim %}
+            <div id="popup-content">
+
+                <h1 style="text-align: center; text-decoration: underline">Scrape-&#937;-Matic</h1>
+
+                <textarea style="width: 100%; height: 5em" v-model="scrapeInput" placeholder="Paste text or link to a page here."></textarea>
+                <div class="button scrape">Scrape keywords from text area</div>
+
+
+                <form method="post" enctype="multipart/form-data">
+                    <input type="file" name="files[]" multiple>
+                    <div class="button upload-file">Scrape keywords from uploaded audio file</div>
+                </form>
+
+                <input v-model="youtubeLink" placeholder="Youtube link">
+                <div class="button scrape-youtube">Scrape keywords from audio of youtube link</div>
+
+                <div v-if="showKeywordsLoading" id="keywords-title" class="sub-title">Loading ...</div>
+                <div id="keywords-title" class="sub-title hidden">Keywords:</div>
+                <div class='keywords' id="keywords-list" v-for="(kw, index) in keywords">
+                    <label :for="'selected-keyword' + index" class="pure-checkbox">
+                        <input :id="'selected-keyword' + index" v-model="selectedKeywords" :value="kw.label" type="checkbox" checked>
+                        {{ kw.label }} (score: {{kw.score.toFixed(2)}})
+                    </label>
+                </div>
+                <div class="button search">Search with keywords</div>
+                <div v-if="showSearchLoading" id="keywords-title" class="sub-title">Loading ...</div>
+                <div id="datasets-title" class="sub-title hidden">Results:</div>
+                <h3 v-if="recursionLevel" class="recursion-level">Recursion level: {{ recursionLevel }}</h2>
+                <h2 v-if="showSearchResults">Articles</h2>
+                <ul v-if="showSearchResults">
+                    <li class='search-result' v-for="res in searchResults.datasets">
+                        <div><strong>Title: </strong>{{ res.title }}</div>
+                        <div><strong>Abstract: </strong>{{ res.abstract }}</div>
+                        <div><strong>Source: </strong>{{ res.source }}</div>
+                        <template v-for="link in res.links">
+                            <div><strong>URL: </strong><a v-bind:href="link">{{ link }}</a></div>
+                        </template>
+                        <div v-on:click="scrapeAbstract(res.abstract, recursionLevel)" class="scrape-abstract">Recursive scrape and search using abstract</div>
+                        <hr />
+                    </li>
+                </ul>
+                <h2 v-if="showSearchResults">Finna</h2>
+                <ul v-if="showSearchResults">
+                    <li class='search-result' v-for="res in searchResults.finna">
+                        <div v-if="res.title"><strong>Title: </strong>{{ res.title }}</div>
+                        <div v-if="res.formats"><strong>Format: </strong>{{ res.formats.translated }}</div>
+                        <div v-if="res.url"><strong>URL: </strong><a v-bind:href="res.url">{{ res.url }}</a></div>
+                        <hr />
+                    </li>
+                </ul>
+                <div id="error-content" class="hidden">
+                    <p>Can't execute content script on this page. Check extension configuration.</p>
+                </div>
+            {% endverbatim %}
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.5.1/vue-resource.js"></script>
+        <script src='{% static "app.js" %}'></script>
+    </body>
+
+</html>
+

@@ -1,0 +1,68 @@
+
+.hidden {
+    display: none;
+}
+.button {
+    border: 1px solid black;
+    padding: 3px;
+    margin: 3% auto;
+    padding: 4px;
+    text-align: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    font-size: 25px;
+}
+.button:hover {
+    background-color: #F0F0F0;
+}
+.popup-content {
+    height: 20em;
+    width: 20em;
+}
+.generic-list {
+    text-align: center;
+}
+.sub-title {
+    text-align: center;
+}
+.upload-file {
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 3px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.scrape-abstract {
+    text-align: right;
+    cursor: pointer;
+}
+
+.scrape-abstract:hover {
+    text-decoration: underline
+}
+
+.search-result {
+    padding: 5px;
+    font-size: 25px;
+}
+.search-result:hover {
+    background-color: #F0F0F0;
+    border-radius: 3px;
+}
+.recursion-level {
+    text-align: center;
+}
+
+.keywords {
+    text-align: center;
+    padding: 7px;
+    font-size: 30px;
+}
+
+li {
+    list-style:none;
+}
